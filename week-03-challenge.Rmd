@@ -1,0 +1,56 @@
+---
+title: "week-03-challenge"
+author: "Anais"
+date: "2/1/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+CHALLENGE:
+In one line of code, do the following:
+
+* Add a variable, Binomial to our data frame d, which is a concatenation of the Genus and Species…
+* Trim the data frame to only include the variables Binomial, Family, Brain_size_species_mean, Body_mass_male_mean...
+* Group these variables by Family…
+* Calculate the average value for Brain_size_species_mean, Body_mass_male_mean per Family
+* And arrange by increasing average brain size
+
+```
+library(tidyverse)
+
+#loading data
+f <- "https://raw.githubusercontent.com/difiore/ada-2022-datasets/main/KamilarAndCooperData.csv"
+d <- read_csv(f, col_names = TRUE) # creates a "tibble"
+head(d)
+view(d)
+```
+* Challenge response
+```
+s <- mutate(d, "Binomial" = paste(Genus, Species, sep = " "))%>%
+  select(Binomial, Family, Brain_Size_Species_Mean, Body_mass_male_mean)%>%
+  group_by(Family)%>%
+  summarise(
+    avgBS = mean(Brain_Size_Species_Mean, na.rm = TRUE),
+    avgBM = mean(Body_mass_male_mean, na.rm = TRUE),
+  ) %>%
+    arrange(avgBM)
+s
+
+
+
+head(s)
+
+
+
+```
+
+
+
+
+
+
+
